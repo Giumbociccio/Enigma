@@ -1,0 +1,29 @@
+Funzionamento Enigma:
+- premi una lettera
+- la lettera passa nella plugboard e può essere scambiata o no
+- passa nei 3 rotori e cambia 3 volte
+- passa nel reflector e cambia
+- passa nei 3 rotori e cambia altre 3 volte
+- passa nella plugboard e può essere scambiata o no
+- esce in output
+
+Rotori:
+- 
+- 
+- 
+
+Configurazione impostazioni:
+- ordine dei rotori (5 rotori → sceglierne 3, metterli in un determinato ordine)
+- ordine delle tacche laterali dei rotori (a che numero ogni rotore fa girare il successivo)
+- ordine dei numeretti sui rotori
+- connessioni nella plugboard (una decina di cavi → 20 lettere connesse)
+
+ATTENZIONE
+fare la classe Pair [char, char]
+utile per scambiare 2 lettere
+
+rotors:
+Rotor r1 = new Rotor();
+Rotor r2 = new Rotor();
+Rotor r3 = new Rotor();
+
