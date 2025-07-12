@@ -1,5 +1,8 @@
 package it.giumbociccio.enigma.logic;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import it.giumbociccio.enigma.model.EnigmaSettings;
 
 public class EnigmaMachine {
@@ -27,7 +30,16 @@ public class EnigmaMachine {
 	}
 	
 	private char rotorsChangeLetter(char letter) {
-		char updatedLetter = this.settings.getRotors().changeLetter(letter);
+		char updatedLetter = letter;
+		try {
+			updatedLetter = this.settings.getRotors().changeLetter(letter);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return updatedLetter;
 	}
 
