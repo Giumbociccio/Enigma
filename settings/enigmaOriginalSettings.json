@@ -1,0 +1,33 @@
+{
+	"rotors": {
+		"1": {
+			"connections": "EKMFLGDQVZNTOWYHXUSPAIBRCJ",
+			"notchPin": "Q"
+		},
+		"2": {
+			"connections": "AJDKSIRUXBLHWTMCQGZNPYFVOE",
+			"notchPin": "E"
+		},
+		"3": {
+			"connections": "BDFHJLCPRTXVZNYEIWGAKMUSQO",
+			"notchPin": "V"
+		},
+		"4": {
+			"connections": "ESOVPZJAYQUIRHXLNFTGKDCMWB",
+			"notchPin": "J"
+		},
+		"5": {
+			"connections": "VZBRGITYUPSDNHLXAWMJQOFECK",
+			"notchPin": "Z"
+		},
+		"beta": "LEYJVCNIXWPBQMDRTAKZGFUHOS",
+		"gamma": "FSOKANUERHMBTIYCWLQPZXVGJD"
+	},
+	"reflectors": {
+		"A": "EJMZALYXVBWFCRQUONTSPIKHGD",
+		"B": "YRUHQSLDPXNGOKMIEBFZCWVJAT",
+		"C": "FVPJIAOYEDRZXWGCTKUQSBNMHL",
+		"thinB": "ENKQAUYWJICOPBLMDXZVFTHRGS",
+		"thinC": "RDOBJNTKVEHMLFCWZAXGYIPSUQ"
+	}
+}

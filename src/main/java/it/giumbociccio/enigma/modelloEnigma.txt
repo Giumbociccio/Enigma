@@ -1,0 +1,237 @@
+Funzionamento Enigma:
+- Inserisci una lettera/frase da criptare
+- ogni lettera passa in enigma e cambia tramite:
+	- plugboard										mappa.keySet().get(i) oppure (char key : mappa.keySet())
+	- rotore 1
+	- rotore 2
+	- rotore 3
+	- reflector
+	- rotore 3
+	- rotore 2
+	- rotore 1
+	- plugboard
+- Frase criptata (output)
+
+Rotori:
+- {<'A', 'B'>, <'C', 'D'>, ...}
+- {<'A', 'B'>, <'C', 'D'>, ...}
+- {<'A', 'B'>, <'C', 'D'>, ...}
+ 
+
+Configurazione impostazioni:
+- connessioni nella plugboard (una decina di cavi → 20 lettere connesse → 10 Pairs)
+	- nella plugboard non è detto che tutte le lettere siano connesse
+- ordine dei rotori (5 rotori → sceglierne 3, metterli in un determinato ordine)
+- ordine delle tacche laterali dei rotori (a che numero ogni rotore fa girare il successivo) 			<-- IMPORTANTE
+- ordine dei numeretti sui rotori (posizione iniziale)
+
+ATTENZIONE
+fare la classe Pair [char, char] --> si può fare con le HashMap (come gli oggetti JavaScript)
+utile per scambiare 2 lettere
+ 
+rotors:
+Rotor r1 = new Rotor();
+Rotor r2 = new Rotor();
+Rotor r3 = new Rotor();
+
+ci sono i rotori beta e gamma che non ruotano (sono come dei reflector) e si usano con i thinReflector:
+thinB/thinC - beta/gamma - 1 - 2 - 3
+↑ 4 rotori + 1 reflector (in realtà 3 rotori e 2 reflectors)
+
+----------------------------------------------------------
+
+//costruire l'array connections
+
+Gson gson = new Gson();
+
+JSONObject = [
+				['a', 'f'],
+				['d', 'q'],
+				['e', 'z'],
+				['w', 'p']
+			]
+
+char[] connections = 
+
+
+public char changeLetter(char letter){
+	for(char connection : connections){
+		if(connection[0] == letter){
+			return connection[1];
+		} else if(connection[1] == letter){
+			return connection[0];
+		}
+		return letter;
+	}
+}
+
+-----------------------------------------------------------
+//farlo con gli HashMap
+
+WriteFile writer = new WriteFile("config/currentSettings.json");
+
+// cast JSON -> HashMap e viceversa		--> Gson
+
+HashMap<Character, Character> connections = new HashMap();
+
+for(char l : Utility.alfabeto){
+	if(connections.get(letter) == letter) {
+		connections.put(connections.get(letter), letter);
+		continue;
+	}
+	connections.put(l, letter);
+}
+
+-------------------------------------------------------------
+GSON: json to Hashmap e viceversa -->
+https://www.baeldung.com/gson-json-to-map
+https://mkyong.com/java/how-do-convert-java-object-to-from-json-format-gson-api/
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Map;
+
+public class JsonToHashMapExample {
+    public static void main(String[] args) {
+        String json = "{\"nome\":\"Luca\", \"eta\":30, \"isStudente\":false}";
+
+        Gson gson = new Gson();
+
+        // Tipo generico per HashMap<String, Object>
+        Type type = new TypeToken<HashMap<String, Object>>() {}.getType();
+
+        // Conversione
+        HashMap<String, Object> map = gson.fromJson(json, type);
+
+        // Stampa
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            System.out.println(entry.getKey() + " => " + entry.getValue());
+        }
+
+        // Accesso ai dati
+        String nome = (String) map.get("nome");
+        Double eta = (Double) map.get("eta"); // numeri diventano Double per default
+        Boolean isStudente = (Boolean) map.get("isStudente");
+
+        System.out.println("Nome: " + nome);
+        System.out.println("Età: " + eta.intValue());
+        System.out.println("Studente: " + isStudente);
+    }
+}
+
+--------------------------------------------
+
+read & write
+// Read JSON from a file
+        try (Reader reader = new FileReader("person.json")) {
+
+            // convert the JSON data to a Java object
+            Person person = gson.fromJson(reader, Person.class);
+            System.out.println(person);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+// write to this file
+        try (Writer writer = new FileWriter("person.json")) {
+
+            // Convert the Java object `person` into a JSON data and write to a file
+            gson.toJson(person, writer);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+// parse a file in a string
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.io.IOException;
+
+public class JsonToString {
+    public static void main(String[] args) {
+        String path = "percorso/del/tuo/file.json";
+        try {
+            // Legge tutto il file come byte[] e lo converte in stringa UTF-8
+            String jsonString = new String(Files.readAllBytes(Paths.get(path)), "UTF-8");
+            System.out.println(jsonString);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+---------------------------------------------------------------------------
+struttura Maven project:
+
+src/main/java/
+└── it/giumbociccio/enigma/
+    ├── Main.java
+    ├── config/
+    │   └── SettingsManager.java
+    ├── model/
+    │   └── EnigmaSettings.java
+    ├── logic/
+    │   └── EnigmaMachine.java
+    └── console/
+        └── EnigmaConsoleUI.java
+
+// Main.java
+Il file Main.java è il punto d’ingresso della tua applicazione Enigma. Serve a:
+
+Caricare o inizializzare la configurazione della macchina
+
+Creare un'istanza della macchina Enigma
+
+Avviare l’interfaccia utente (es. console)
+
+Gestire l’eventuale salvataggio delle impostazioni alla fine
+
+✅ Struttura consigliata per Main.java
+package it.giumbociccio.enigma;
+
+import it.giumbociccio.enigma.model.EnigmaSettings;
+import it.giumbociccio.enigma.logic.EnigmaMachine;
+import it.giumbociccio.enigma.console.EnigmaConsoleUI;
+import it.giumbociccio.enigma.config.SettingsManager;
+
+public class Main {
+    public static void main(String[] args) {
+        try {
+            // 1. Carica le impostazioni da file JSON
+            SettingsManager settingsManager = new SettingsManager("config/currentSettings.json");
+            EnigmaSettings settings = settingsManager.loadSettings();
+
+            // 2. Crea la macchina Enigma con le impostazioni caricate
+            EnigmaMachine machine = new EnigmaMachine(settings);
+
+            // 3. Avvia l’interfaccia console
+            EnigmaConsoleUI consoleUI = new EnigmaConsoleUI(machine);
+            consoleUI.start();
+
+            // 4. Salva le impostazioni aggiornate al termine (opzionale)
+            settingsManager.saveSettings(machine.getCurrentSettings());
+
+        } catch (Exception e) {
+            System.err.println("Errore durante l'avvio della macchina Enigma:");
+            e.printStackTrace();
+        }
+    }
+}
+🔍 Cosa serve avere perché questo funzioni?
+SettingsManager (nel package config)
+Classe che si occupa di leggere e scrivere il file JSON di configurazione.
+
+Internamente usa una libreria tipo Jackson o Gson.
+
+EnigmaSettings (nel package model)
+Contiene la configurazione della macchina: ordine rotori, plugboard, offset, ecc.
+
+EnigmaMachine (nel package logic)
+Incapsula la logica della cifratura.
+
+EnigmaConsoleUI (nel package console)
+Gestisce l’interazione da terminale con l’utente (inserimento lettere, comandi, stampa output).
+
+-----------------
