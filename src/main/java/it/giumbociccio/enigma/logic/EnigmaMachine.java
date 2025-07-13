@@ -36,16 +36,8 @@ public class EnigmaMachine {
 
 	private char rotorsChangeLetter(char letter) {
 		char updatedLetter = letter;
-		try {
-			Rotors rotors = this.settings.getRotors();
-			updatedLetter = rotors.changeLetter(letter);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Rotors rotors = this.settings.getRotors();
+		updatedLetter = rotors.changeLetter(letter);
 		return updatedLetter;
 	}
 

@@ -5,9 +5,9 @@ import java.util.*;
 
 public class Rotors {
 	private List<Rotor> rotors;
-	private HashMap<Character, Character> reflector;
+	private String reflector;
 
-	public Rotors(List<Rotor> rotors, HashMap<Character, Character> reflector) {
+	public Rotors(List<Rotor> rotors, String reflector) {
 		super();
 		this.rotors = rotors;
 		this.reflector = reflector;
@@ -30,8 +30,7 @@ public class Rotors {
 	}
 
 	private char reflectorChangeLetter(char letter) {
-//		char updatedLetter = this.reflector.charAt(Utility.letterToInt(letter));
-		char updatedLetter = this.reflector.get(letter);
+		char updatedLetter = this.reflector.charAt(Utility.letterToInt(letter));
 		return updatedLetter;
 	}
 

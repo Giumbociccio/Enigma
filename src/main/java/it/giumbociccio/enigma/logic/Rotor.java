@@ -8,15 +8,23 @@ public class Rotor {
 	private int currentPin;
 	private int ringSetting;
 
-	public Rotor(String connections, char notchPin, char currentPin) {
+	public Rotor(String connections, char notchPin, char currentPin, char ringSetting) {
 		super();
 		this.setConnections(connections);
 		this.setNotchPin(Utility.letterToInt(notchPin));
 		this.setCurrentPin(Utility.letterToInt(currentPin));
 	}
 
+	public Rotor(String connections, int notchPin, int currentPin, int ringSetting) {
+		super();
+		this.connections = connections;
+		this.notchPin = notchPin;
+		this.currentPin = currentPin;
+		this.ringSetting = ringSetting;
+	}
+
 	public char changeLetter(char letter) {
-		int position = Utility.letterToInt(letter) + currentPin - ringSetting % 26;
+		int position = (Utility.letterToInt(letter) + currentPin - ringSetting) % 26;
 		char updatedLetter = this.connections.charAt(position);
 		return updatedLetter;
 	}
