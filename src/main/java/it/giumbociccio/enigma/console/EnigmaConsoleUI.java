@@ -8,8 +8,9 @@ import it.giumbociccio.enigma.utils.Utility;
 public class EnigmaConsoleUI {
 	private Scanner s = new Scanner(System.in);
 	private String messaggio = "Cosa vuoi fare?\n1) Criptare un messaggio\n2) Modificare le impostazioni\n3) Termina";
+	private String errore = "ERRORE! Inserisci un valore valido";
 	private EnigmaMachine enigma;
-	
+
 	public EnigmaConsoleUI(EnigmaMachine machine) {
 		this.enigma = machine;
 	}
@@ -19,16 +20,14 @@ public class EnigmaConsoleUI {
 		while (play) {
 			System.out.println(messaggio);
 
-			int scelta = s.nextInt();
-//			prova();
-//			createEnigma();
 			try {
-				switch (scelta) {
+				switch (s.nextInt()) {
 				case 1:
 					s.nextLine();
 					encrypt();
 					break;
 				case 2:
+					s.nextLine();
 					settings();
 					break;
 				case 3:
@@ -36,18 +35,18 @@ public class EnigmaConsoleUI {
 					play = false;
 					break;
 				default:
-					System.out.println("ERRORE! Inserisci un valore valido");
+					System.err.println(errore);
 					break;
 				}
 			} catch (InputMismatchException e) {
-				System.out.println("ERRORE! Inserisci un valore valido");
+				System.err.println(errore);
 				s.nextLine();
 			}
 		}
 	}
-	
+
 	public void encrypt() {
-		
+
 		boolean isLetter = false;
 		String result = "";
 		while (!isLetter) {
@@ -60,25 +59,41 @@ public class EnigmaConsoleUI {
 					result += " ";
 					continue;
 				} else if (!isLetter) {
-					result = "ATTENZIONE! '" + letter + "' non è una lettera.";
+					System.err.println("ATTENZIONE! '" + letter + "' non è una lettera.");
 					break;
+				} else {
+
+					result += this.enigma.changeLetter(letter);
 				}
-				result += this.enigma.changeLetter(letter);
 			}
-	
+
 			System.out.println(result);
 			result = "";
-	
+
 		}
-	
+
 	}
-	
-	public static void settings() {
+
+	public void settings() {
 		System.out.println("Modifica le impostazioni:");
+		// Plugboard
 		System.out.println("Imposta la plugboard");
 		for (char connection : Utility.alfabeto) {
-			System.out.println(connection);
+			boolean isLetter = false;
+			while (!isLetter) {
+				System.out.print(connection + ": ");
+				char risposta = s.nextLine().charAt(0);
+				isLetter = Utility.isLetter(risposta);
+				if (!isLetter) {
+					System.err.println(errore);
+				}
+			}
 		}
+		// Rotori
+		System.out.println("Imposta i rotori");
+		// Reflector
+		System.out.println("Seleziona il riflettore");
+
 //		scrivi();
 	}
 }

@@ -1,6 +1,6 @@
-package it.giumbociccio.enigma.components;
+package it.giumbociccio.enigma.logic;
 
-import it.giumbociccio.enigma.utils.*;
+import it.giumbociccio.enigma.utils.Utility;
 import java.util.*;
 
 public class Rotors {
@@ -18,32 +18,30 @@ public class Rotors {
 		rotateRotors();
 
 		// passa nei 3 rotori
-		char updatedLetter = rotorsConversion(letter, true);
+		char updatedLetter = rotorsChangeLetter(letter, true);
 
 		// passa nel reflector
 		updatedLetter = reflectorChangeLetter(updatedLetter);
 
 		// passa nei 3 rotori (di nuovo)
-		updatedLetter = rotorsConversion(updatedLetter, false);
+		updatedLetter = rotorsChangeLetter(updatedLetter, false);
 
 		return updatedLetter;
 	}
 
 	private char reflectorChangeLetter(char letter) {
+//		char updatedLetter = this.reflector.charAt(Utility.letterToInt(letter));
 		char updatedLetter = this.reflector.get(letter);
 		return updatedLetter;
 	}
 
-	private char rotorsConversion(char letter, boolean rightToLeft) {
+	private char rotorsChangeLetter(char letter, boolean rightToLeft) {
 		char currentLetter = letter;
 		// 3 rotori
 		for (int i = 0; i < this.rotors.size(); i++) {
 			int index = rightToLeft ? i : this.rotors.size() - i - 1;
 			Rotor r = this.rotors.get(index);
-			int currentRotation = this.rotors.get(index).getCurrentPin();
-			int inputPin = Utility.letterToInt(currentLetter);
-			int actualPin = (inputPin + currentRotation) % 26;
-			currentLetter = r.changeLetter(Utility.intToLetter(actualPin));
+			currentLetter = r.changeLetter(Utility.intToLetter(currentLetter));
 		}
 		return currentLetter;
 	}
@@ -65,26 +63,9 @@ public class Rotors {
 		this.rotors.get(index).setCurrentPin(finalRotation);
 	}
 
-	private void rotateRotor(Rotor r) {
-		rotateRotor(this.rotors.indexOf(r));
-	}
-
 	@Override
 	public String toString() {
 		return "Rotors [rotors=" + rotors + ", reflector=" + reflector + "]";
 	}
 
-//	private void prova() {
-//
-//		char a = 'A';
-//		for (int i = 0; i < 26; i++) {
-//			if (i + this.rotation < 26) {
-//				this.numbers[i] = i + this.rotation;
-//			} else {
-//				this.numbers[i] = i + this.rotation - 26;
-//			}
-//			this.alphabet[this.numbers[i]] = a;
-//			a++;
-//		}
-//	}
 }

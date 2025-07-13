@@ -17,10 +17,13 @@ public class SettingsManager {
 	}
 
 	public EnigmaSettings loadSettings() {
-		try (Reader reader = new FileReader(this.settingsPath)) {
+		try (Reader reader = new FileReader(this.settingsPath);
+				Reader reader2 = new FileReader("settings/originalSettings.json")) {
 
-			// convert the JSON data to a Java object EnigmaSettings
+			// convert the JSON data to a Java object 'EnigmaSettings'
 			EnigmaSettings settings = gson.fromJson(reader, EnigmaSettings.class);
+
+			// QUI CONVERTI LE STRINGHE IN HASHMAP, METTI BENE I ROTORI (connections) ETC.
 			return settings;
 
 		} catch (IOException e) {

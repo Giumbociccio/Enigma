@@ -12,19 +12,26 @@ Funzionamento Enigma:
 	- plugboard
 - Frase criptata (output)
 
-Rotori:
-- {<'A', 'B'>, <'C', 'D'>, ...}
-- {<'A', 'B'>, <'C', 'D'>, ...}
-- {<'A', 'B'>, <'C', 'D'>, ...}
- 
+non configurabile:
+- notchPin: ordine delle tacche laterali dei rotori (a che lettera ogni rotore fa girare il successivo)
 
 Configurazione impostazioni:
-- connessioni nella plugboard (una decina di cavi → 20 lettere connesse → 10 Pairs)
+- connessioni nella plugboard (una decina di cavi → 20 lettere connesse)
 	- nella plugboard non è detto che tutte le lettere siano connesse
-- ordine dei rotori (5 rotori → sceglierne 3, metterli in un determinato ordine)
-- ordine delle tacche laterali dei rotori (a che numero ogni rotore fa girare il successivo) 			<-- IMPORTANTE
-- ordine dei numeretti sui rotori (posizione iniziale)
+- rotorsOrder: (5 rotori → sceglierne 3, metterli in un determinato ordine)
+- initialPositions: lettere visibili esternamente (quelle che cambiano quando si digita)
+- ringSetting: offset (sfasamento) iniziale tra cablaggio e initialPositions
 
+--> il cablaggio (connections) è costante		<-- IMPORTANTE
+
+Supponiamo un rotore I con:
+initialPosition = 'A'
+ringSetting = 'B'
+notchPin = 'Q'
+Allora:
+Il rotore parte visivamente da 'A', ma il cablaggio è spostato internamente di 1 (come se cominciasse da 'B').
+Quando arriva su 'Q', il rotore successivo gira
+------------------------------------------------
 ATTENZIONE
 fare la classe Pair [char, char] --> si può fare con le HashMap (come gli oggetti JavaScript)
 utile per scambiare 2 lettere
@@ -37,6 +44,60 @@ Rotor r3 = new Rotor();
 ci sono i rotori beta e gamma che non ruotano (sono come dei reflector) e si usano con i thinReflector:
 thinB/thinC - beta/gamma - 1 - 2 - 3
 ↑ 4 rotori + 1 reflector (in realtà 3 rotori e 2 reflectors)
+
+----------------------------------------------------------
+
+Rotore I, con cablaggio fisso (storico):
+
+A → E
+B → K
+C → M
+D → F
+E → L
+...
+Z → J
+Quindi se nessuna rotazione o offset è applicato, premendo la lettera A, esce E.
+
+🧪 Caso base: nessun offset
+initialPosition = 'A'
+ringSetting = 'A' (quindi 0 offset)
+Premi: A
+Effetto:
+Il segnale entra nel rotore dalla posizione 0 (cioè A)
+Il cablaggio ti porta da A → E
+✅ Risultato: A diventa E
+
+🔁 Caso 1: initialPosition cambia
+initialPosition = 'B' (cioè il rotore è ruotato di 1 posizione)
+ringSetting = 'A'
+Premi: A
+Effetto:
+Anche se premi A, il rotore è ruotato: per lui, A è diventata B
+Il segnale entra nella posizione 1 → cablaggio dice: B → K
+✅ Risultato: A diventa K
+
+Nota: il cablaggio è lo stesso, ma il rotore è ruotato: stai entrando nel punto 1 invece che 0
+
+🔁 Caso 2: ringSetting cambia
+initialPosition = 'A'
+ringSetting = 'B' (quindi offset interno di -1)
+Premi: A
+Effetto:
+Il cablaggio interno è come se fosse spostato all’indietro: il segnale che entra da A in realtà segue la mappatura Z → J
+Perciò, A passa attraverso la connessione che normalmente usava Z
+✅ Risultato: A diventa J
+
+Anche qui, il cablaggio non cambia, ma cambia l'allineamento logico tra lettere e cavi.
+
+🔄 Caso 3: combinazione di entrambi
+initialPosition = 'B'
+ringSetting = 'B'
+Premi: A
+Effetto:
+Rotore ruotato di +1 → la lettera A è vista come B
+Ring setting di -1 → la mappatura è come se partisse da A
+Quindi sei di nuovo sulla mappatura normale, ma dalla posizione 1 (cioè B → K)
+✅ Risultato: A diventa K
 
 ----------------------------------------------------------
 

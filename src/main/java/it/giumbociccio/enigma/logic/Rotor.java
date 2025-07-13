@@ -1,15 +1,14 @@
-package it.giumbociccio.enigma.components;
-
-import java.util.*;
+package it.giumbociccio.enigma.logic;
 
 import it.giumbociccio.enigma.utils.Utility;
 
 public class Rotor {
-	private HashMap<Character, Character> connections;
+	private String connections;
 	private int notchPin;
 	private int currentPin;
+	private int ringSetting;
 
-	public Rotor(HashMap<Character, Character> connections, char notchPin, char currentPin) {
+	public Rotor(String connections, char notchPin, char currentPin) {
 		super();
 		this.setConnections(connections);
 		this.setNotchPin(Utility.letterToInt(notchPin));
@@ -17,10 +16,8 @@ public class Rotor {
 	}
 
 	public char changeLetter(char letter) {
-//		char updatedLetter = this.connections.get(letter);
-		String connections = "QAZWSXEDCRFV";
-		int position = Utility.letterToInt(letter);
-		char updatedLetter = connections.charAt(position);
+		int position = Utility.letterToInt(letter) + currentPin - ringSetting % 26;
+		char updatedLetter = this.connections.charAt(position);
 		return updatedLetter;
 	}
 
@@ -30,11 +27,11 @@ public class Rotor {
 		return newConnections;
 	}
 
-	public HashMap<Character, Character> getConnections() {
+	public String getConnections() {
 		return connections;
 	}
 
-	public void setConnections(HashMap<Character, Character> connections) {
+	public void setConnections(String connections) {
 		this.connections = connections;
 	}
 
@@ -53,6 +50,14 @@ public class Rotor {
 	public void setCurrentPin(int currentPin) {
 		this.currentPin = currentPin;
 	}
+
+//	public int getRingSetting() {
+//		return ringSetting;
+//	}
+//
+//	public void setRingSetting(int ringSetting) {
+//		this.ringSetting = ringSetting;
+//	}
 
 	public void increaseCurrentPin() {
 		setCurrentPin((this.currentPin + 1) % 26);

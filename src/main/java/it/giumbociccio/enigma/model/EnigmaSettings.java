@@ -3,18 +3,17 @@ package it.giumbociccio.enigma.model;
 import java.util.*;
 import java.io.*;
 import java.lang.reflect.Type;
-
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import it.giumbociccio.enigma.components.Rotor;
-import it.giumbociccio.enigma.components.Rotors;
 import it.giumbociccio.enigma.config.SettingsManager;
+import it.giumbociccio.enigma.logic.Rotor;
+import it.giumbociccio.enigma.logic.Rotors;
 
 public class EnigmaSettings {
 
 	private List<String> rotorsOrder;
-	private HashMap<Character, Character> plugboard;
+	private List<String> rotors;
+	private String plugboard;
 	private String reflectorType;
 	private String ringSettings;
 	private String initialPositions;
@@ -25,26 +24,28 @@ public class EnigmaSettings {
 
 	public Rotors getRotors() throws FileNotFoundException, IOException {
 		List<Rotor> rotors = new ArrayList<>();
-		try (Reader r = new FileReader("settings/rotors")) {
+		try (Reader r = new FileReader("settings/rotors.json");
+				Reader reader = new FileReader("settings/reflector.json")) {
+			Type listType = new TypeToken<List<Rotor>>() {
+			}.getType();
+			rotors = SettingsManager.gson.fromJson(r, listType);
 			HashMap<Character, Character> reflector = new HashMap<Character, Character>();
-			try (Reader reader = new FileReader("settings/reflector.json")) {
 
-				// Tipo generico per HashMap<String, Object>
-				Type type = new TypeToken<Map<String, Map<String, String>>>() {
-				}.getType();
+			// Tipo generico per HashMap<String, Object>
+			Type type = new TypeToken<Map<String, Map<String, String>>>() {
+			}.getType();
 
-				// Conversione
-				Map<String, Map<String, String>> allReflectors = SettingsManager.gson.fromJson(reader, type);
-				Map<String, String> rawReflector = allReflectors.get(this.reflectorType);
+			// Conversione
+			Map<String, Map<String, String>> allReflectors = SettingsManager.gson.fromJson(reader, type);
+			Map<String, String> rawReflector = allReflectors.get(this.reflectorType);
 
-				// Converte in HashMap<Character, Character>
-				rawReflector.forEach((k, v) -> reflector.put(k.charAt(0), v.charAt(0)));
+			// Converte in HashMap<Character, Character>
+			rawReflector.forEach((k, v) -> reflector.put(k.charAt(0), v.charAt(0)));
 
-				Rotors toReturn = new Rotors(rotors, reflector);
-				return toReturn;
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
+			Rotors toReturn = new Rotors(rotors, reflector);
+			return toReturn;
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -56,12 +57,12 @@ public class EnigmaSettings {
 		this.rotorsOrder = rotorsOrder;
 	}
 
-	public HashMap<Character, Character> getPlugboard() {
+	public String getPlugboard() {
 		return plugboard;
 	}
 
-	public void setPlugboard(HashMap<Character, Character> plugboardSettings) {
-		this.plugboard = plugboardSettings;
+	public void setPlugboard(String plugboard) {
+		this.plugboard = plugboard;
 	}
 
 	public String getReflectorType() {

@@ -16,10 +16,10 @@ public class Utility {
 	}
 
 	public static boolean isLetter(char input) {
-		char letter = input;
+		char letter = Character.toUpperCase(input);
 		boolean toReturn = false;
 		for (char c : alfabeto) {
-			if (Character.toUpperCase(letter) == c) {
+			if (letter == c) {
 				toReturn = true;
 			}
 		}
