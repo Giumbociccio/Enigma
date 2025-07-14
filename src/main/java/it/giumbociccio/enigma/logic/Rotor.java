@@ -23,16 +23,40 @@ public class Rotor {
 		this.ringSetting = ringSetting;
 	}
 
+//	public char changeLetter(char letter) {
+//		int position = (Utility.letterToInt(letter) + currentPin - ringSetting +26) % 26;
+//		char updatedLetter = this.connections.charAt(position);
+//		return updatedLetter;
+//	}
 	public char changeLetter(char letter) {
-		int position = (Utility.letterToInt(letter) + currentPin - ringSetting) % 26;
-		char updatedLetter = this.connections.charAt(position);
-		return updatedLetter;
-	}
+	    int intLetter = Utility.letterToInt(letter);  
+	    // esempio: 'A' → 0
 
-	public String updateRotors() {
-		String str = "rotorConnections"; // getConnections()
-		String newConnections = "" + str.charAt(str.length() - 1) + str.substring(0, str.length() - 2);
-		return newConnections;
+	    int shiftedIndex = (intLetter + currentPin - ringSetting + 26) % 26;  
+	    // sposto la posizione della lettera, tenendo conto del rotore
+
+	    char wiredLetter = this.connections.charAt(shiftedIndex);  
+	    // leggo la lettera connessa nel cablaggio del rotore
+
+	    int outputIndex = (Utility.letterToInt(wiredLetter) - currentPin + ringSetting + 26) % 26;  
+	    // tolgo lo spostamento per tornare alla posizione originale
+
+	    return Utility.intToLetter(outputIndex);  
+	    // ritorno la lettera finale
+	}
+	
+	public char inverseChangeLetter(char c) {
+	    int intLetter = Utility.letterToInt(c);
+
+	    int shiftedIndex = (intLetter + currentPin - ringSetting + 26) % 26;
+	    char shiftedChar = Utility.intToLetter(shiftedIndex);
+
+	    int indexInWiring = this.connections.indexOf(shiftedChar);  
+	    // dove si trova la lettera in uscita?
+
+	    int outputIndex = (indexInWiring - currentPin + ringSetting + 26) % 26;
+
+	    return Utility.intToLetter(outputIndex);
 	}
 
 	public String getConnections() {

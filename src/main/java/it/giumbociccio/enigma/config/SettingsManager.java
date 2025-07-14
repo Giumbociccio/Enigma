@@ -14,7 +14,9 @@ import it.giumbociccio.enigma.model.EnigmaSettings;
 
 public class SettingsManager {
 	private String settingsPath = "settings/settings.json";
-	public static Gson gson = new Gson();
+	public static Gson gson = new GsonBuilder()
+		    .excludeFieldsWithoutExposeAnnotation()
+		    .create();
 
 	public SettingsManager(String settingsPath) {
 		this.settingsPath = settingsPath;
@@ -38,9 +40,15 @@ public class SettingsManager {
 			Type listType = new TypeToken<Map<String, Object>>() {
 			}.getType();
 			Map<String, Object> originalSettings = gson.fromJson(jsonOriginalSettings, listType);
-			List<Rotor> rotori = getRotorsSettings(originalSettings, rotorsOrder);
+			List<Rotor> rotori = getRotorsSettings(
+				    originalSettings,
+				    rotorsOrder,
+				    settings.getInitialPositions(),
+				    settings.getRingSettings()
+				);
 			
 			//reflector
+			@SuppressWarnings("unchecked")
 			Map<String, Object> reflectors = (Map<String, Object>) originalSettings.get("reflectors");
 			String reflector = (String) reflectors.get(settings.getReflectorType());
 			
@@ -68,26 +76,28 @@ public class SettingsManager {
 
 	}
 
-	private List<Rotor> getRotorsSettings(Map<String, Object> originalSettings, List<String> rotorsOrder) {
-	    List<Rotor> toReturn = new ArrayList<>();
+	@SuppressWarnings("unchecked")
+	private List<Rotor> getRotorsSettings(Map<String, Object> originalSettings,
+            List<String> rotorsOrder,
+            String initialPositions,
+            String ringSettings){
+		List<Rotor> toReturn = new ArrayList<>();
+		Map<String, Object> rotors = (Map<String, Object>) originalSettings.get("rotors");
 
-	    // Recupera la mappa dei rotori dal JSON
-	    Map<String, Object> rotors = (Map<String, Object>) originalSettings.get("rotors");
+		for (int i = 0; i < rotorsOrder.size(); i++) {
+		    String rotorName = rotorsOrder.get(i);
+		    LinkedTreeMap<String, String> rotorData = (LinkedTreeMap<String, String>) rotors.get(rotorName);
 
-	    for (String rotorName : rotorsOrder) {
-	        // Gson usa LinkedTreeMap per rappresentare oggetti JSON annidati
-	        LinkedTreeMap<String, String> rotorData = (LinkedTreeMap<String, String>) rotors.get(rotorName);
+		    String connections = rotorData.get("connections");
+		    char notchPin = rotorData.get("notchPin").charAt(0);
 
-	        // Recupera i valori richiesti
-	        String connections = rotorData.get("connections");
-	        char notchPin = rotorData.get("notchPin").charAt(0);
+		    char currentPosition = initialPositions.charAt(i); // es. 'A'
+		    char ringSetting = ringSettings.charAt(i);         // es. 'A'
 
-	        // Crea il rotore
-	        Rotor rotor = new Rotor(connections, notchPin, 'A', 'A');
-	        toReturn.add(rotor);
-	    }
-
-	    return toReturn;
+		    Rotor rotor = new Rotor(connections, notchPin, currentPosition, ringSetting);
+		    toReturn.add(rotor);
+		}
+		return toReturn;
 	}
 
 }

@@ -7,28 +7,5 @@
 	"plugboard": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
 	"reflectorType": "B",
 	"ringSettings": "AAA",
-	"initialPositions": "AAA",
-	"rotors": {
-		"rotors": [
-			{
-				"connections": "EKMFLGDQVZNTOWYHXUSPAIBRCJ",
-				"notchPin": 16,
-				"currentPin": 4,
-				"ringSetting": 0
-			},
-			{
-				"connections": "AJDKSIRUXBLHWTMCQGZNPYFVOE",
-				"notchPin": 4,
-				"currentPin": 0,
-				"ringSetting": 0
-			},
-			{
-				"connections": "BDFHJLCPRTXVZNYEIWGAKMUSQO",
-				"notchPin": 21,
-				"currentPin": 0,
-				"ringSetting": 0
-			}
-		],
-		"reflector": "YRUHQSLDPXNGOKMIEBFZCWVJAT"
-	}
+	"initialPositions": "AAA"
 }

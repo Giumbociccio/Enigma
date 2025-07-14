@@ -35,14 +35,20 @@ public class Rotors {
 	}
 
 	private char rotorsChangeLetter(char letter, boolean rightToLeft) {
-		char currentLetter = letter;
+		int currentIndex = Utility.letterToInt(letter);
 		// 3 rotori
 		for (int i = 0; i < this.rotors.size(); i++) {
 			int index = rightToLeft ? i : this.rotors.size() - i - 1;
 			Rotor r = this.rotors.get(index);
-			currentLetter = r.changeLetter(Utility.intToLetter(currentLetter));
+
+			if (rightToLeft) {
+				currentIndex = Utility.letterToInt(r.changeLetter(Utility.intToLetter(currentIndex)));
+			} else {
+				currentIndex = Utility.letterToInt(r.inverseChangeLetter(Utility.intToLetter(currentIndex)));
+			}
 		}
-		return currentLetter;
+
+		return Utility.intToLetter(currentIndex);
 	}
 
 	private void rotateRotors() {

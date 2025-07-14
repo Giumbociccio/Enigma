@@ -1,8 +1,5 @@
 package it.giumbociccio.enigma.logic;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 import it.giumbociccio.enigma.model.EnigmaSettings;
 import it.giumbociccio.enigma.utils.Utility;
 
