@@ -8,7 +8,6 @@ import it.giumbociccio.enigma.model.EnigmaSettings;
 public class Main {
 
 	public static void main(String[] args) {
-
 		try {
 			// 1. Carica le impostazioni da file JSON
 			SettingsManager settingsManager = new SettingsManager();
