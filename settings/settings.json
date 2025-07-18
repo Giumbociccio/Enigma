@@ -1,1 +1,11 @@
-{"rotorsOrder":["1","2","3"],"plugboard":"ABCDEFGHIJKLMNOPQRSTUVWXYZ","reflectorType":"B","ringSettings":"AAA","initialPositions":"AAA"}
+{
+	"rotorsOrder": [
+		"1",
+		"2",
+		"3"
+	],
+	"plugboard": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+	"reflectorType": "B",
+	"ringSettings": "AAA",
+	"initialPositions": "AAA"
+}

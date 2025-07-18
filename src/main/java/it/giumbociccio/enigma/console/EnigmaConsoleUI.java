@@ -8,7 +8,7 @@ import it.giumbociccio.enigma.utils.Utility;
 
 public class EnigmaConsoleUI {
 	private Scanner s = new Scanner(System.in);
-	private String messaggio = "Cosa vuoi fare?\n1) Criptare un messaggio\n2) Modificare le impostazioni\n3) Termina";
+	private String messaggio = "\nCosa vuoi fare?\n1) Criptare un messaggio\n2) Modificare le impostazioni\n3) Termina";
 	private String errore = "ERRORE! Inserisci un valore valido";
 	private EnigmaMachine enigma;
 
@@ -17,7 +17,7 @@ public class EnigmaConsoleUI {
 	}
 
 	public void start() {
-		
+
 		boolean play = true;
 		while (play) {
 			System.out.println(messaggio);
@@ -51,7 +51,7 @@ public class EnigmaConsoleUI {
 		boolean isLetter = false;
 		String result = "";
 		while (!isLetter) {
-			System.out.print("Inserisci la frase da de/criptare: ");
+			System.out.print("\nInserisci la frase da de/criptare: ");
 			String frase = s.nextLine().toUpperCase();
 			char[] letters = frase.toCharArray();
 			for (char letter : letters) {
@@ -83,23 +83,26 @@ public class EnigmaConsoleUI {
 
 		// Rotori
 		System.out.println("Imposta i rotori");
+		String rotors = rotorsSettings();
+		
 		// Reflector
 		System.out.println("Seleziona il riflettore");
+		String reflector = reflectorSettings();
 	}
 
 	private String plugboardSettings() {
 		char[] plugboard = Utility.alfabeto.clone();
 
-		System.out.println("Inserisci le coppie di lettere che vuoi connettere (max. 10): es. AG, KY, SZ");
+		System.out.println("Inserisci le coppie di lettere che vuoi connettere (max. 10): es. 'AG, KY, SZ'");
 		String risposta = s.nextLine().toUpperCase().trim();
-		String[] connections = risposta.split(",\\s*");
 
-		if (!validateConnections(connections)) {
+		if (!validateConnections(risposta)) {
 			return plugboardSettings(); // richiama solo se qualcosa è andato storto
 		}
 
 		// Se tutto è valido, applica le connessioni
-		for (String pair : connections) {
+		String[] pairs = risposta.split(",\\s*");
+		for (String pair : pairs) {
 			char firstLetter = pair.charAt(0);
 			char secondLetter = pair.charAt(1);
 			plugboard[Utility.letterToInt(firstLetter)] = secondLetter;
@@ -109,15 +112,46 @@ public class EnigmaConsoleUI {
 		System.out.println(new String(plugboard));
 		return new String(plugboard);
 	}
+	
+	private String rotorsSettings() {
+		System.out.println("Rotori disponibili: 1, 2, 3, 4, 5");
+		System.out.println("Scegli 3 rotori da destra a sinistra (1° = rotore veloce): es. '3, 5, 2'");
+		String risposta = s.nextLine();
+		
+		if (!validateRotors(risposta)) {
+			return rotorsSettings(); // richiama solo se qualcosa è andato storto
+		}
 
-	private boolean validateConnections(String[] pairs) {
-//		TODO: aggiungere la descrizione del problema
-//		es: ("...lettera a se stessa." + first + " <--> " + second + "\n")
+		// Se tutto è valido
+		String[] rotors = risposta.trim().split(",\\s*");
+		
+		
+		String toReturn = "";
+		return toReturn;
+	}
+	
+	private String reflectorSettings() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+		private boolean validateRotors(String risposta) {
+		String[] rotors = risposta.trim().split(",\\s*");
+		return false;
+	}
+
+	boolean validateConnections(String risposta) {
+		String[] pairs = risposta.split(",\\s*");
 		boolean toReturn = true;
 
-		String connections = "";
+		for(char l : risposta.toCharArray()) {
+			if(!Utility.isLetter(l) && l != ',' && l != ' ') {
+				System.err.println("ERRORE! '" + l + "' non è una lettera");
+				return false;
+			}
+		}
 
-		String errors = "";
+		String connections = "";
 		if (pairs.length > 10) {
 			System.err.println("ERRORE! Massimo 10 connessioni. Connessioni attuali: " + pairs.length + "\n");
 			toReturn = false;
@@ -127,83 +161,31 @@ public class EnigmaConsoleUI {
 			if (pair.length() != 2) {
 				System.err.println("ERRORE! Ogni coppia deve contenere esattamente due lettere. " + pair + " contiene "
 						+ pair.length() + " lettere\n");
-				if(pair.length() < 2) {
-					return false;
-				}
-				toReturn = false;
+				return false;
 			}
 
 			char first = pair.charAt(0);
 			char second = pair.charAt(1);
 
 			if (first == second) {
-				System.err.println("ERRORE! Non si può collegare una lettera a se stessa. '" + first + "' <--> '" + second
-						+ "'\n");
+				System.err.println("ERRORE! Non si può collegare una lettera a se stessa. '" + first + "' <--> '"
+						+ second + "'\n");
 				toReturn = false;
 			}
 			for (char letter : pair.toCharArray()) {
 				if (connections.contains(letter + "")) {
 					int position = connections.indexOf(letter);
 					position += position % 2 == 0 ? +1 : -1;
-					System.err.println("ERRORE! Lettera già connessa. '" + letter + "' <--> '" + connections.charAt(position)
-							+ "'. Impossibile collegare '" + letter + "' <--> '" + (letter == first ? second : first)
-							+ "'\n");
+					System.err.println("ERRORE! Lettera già connessa. '" + letter + "' <--> '"
+							+ connections.charAt(position) + "'. Impossibile collegare '" + letter + "' <--> '"
+							+ (letter == first ? second : first) + "'\n");
 					toReturn = false;
 				}
 			}
 			connections += pair;
 		}
 
-
 		return toReturn;
 	}
-
-//	private String plugboardSettings() {
-//		char[] plugboard = Utility.alfabeto.clone();
-//
-//		System.out.println("Inserisci le coppie di lettere che vuoi connettere (max. 10): es. AG, KY, SZ");
-//		String risposta = s.nextLine();
-//
-//		String[] connections = risposta.split(", ");
-//		if(connections.length > 10) {
-//			System.err.println("ERRORE! Massimo 10 connessioni");
-//			return plugboardSettings();
-//		}
-//		for (String pair : connections) {
-//			if (pair.length() != 2) {
-//	            System.err.println("ERRORE! Ogni coppia deve contenere esattamente due lettere.");
-//	            return plugboardSettings();
-//	        }
-//			char firstLetter = pair.charAt(0);
-//			char secondLetter = pair.charAt(1);
-//
-//			// controllo se le lettere sono uguali, se la prima è già connessa, se la
-//			// seconda è già connessa
-//			if (firstLetter == secondLetter) {
-//				System.err.println("ERRORE! Non si può collegare una lettera a se stessa");
-//				return plugboardSettings();
-//			} else if (alreadyConnected(plugboard, firstLetter) || alreadyConnected(plugboard, secondLetter)) {
-//				System.err.println("ERRORE! Lettera già connessa");
-//				return plugboardSettings();
-//			} else {
-//				plugboard[Utility.letterToInt(firstLetter)] = secondLetter;
-//				plugboard[Utility.letterToInt(secondLetter)] = firstLetter;
-//			}
-//		}
-//		System.out.println(new String(plugboard));
-//		return new String(plugboard);
-//	}
-//	
-//	private boolean alreadyConnected(char[] plugboard, char letter) {
-//	    plugboard[Utility.letterToInt(letter)] = '\0'; // ← questo è pericoloso!
-//	    boolean toReturn = false;
-//	    for (char c : plugboard) {
-//	        if (c == letter) {
-//	            toReturn = true;
-//	            break;
-//	        }
-//	    }
-//	    return toReturn;
-//	}
 
 }

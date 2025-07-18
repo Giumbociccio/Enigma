@@ -8,6 +8,8 @@ import it.giumbociccio.enigma.model.EnigmaSettings;
 public class Main {
 
 	public static void main(String[] args) {
+		
+		System.out.println(firstLinePattern("BENVENUTO NELL'EMULATORE DI ENIGMA"));
 		try {
 			// 1. Carica le impostazioni da file JSON
 			SettingsManager settingsManager = new SettingsManager();
@@ -28,5 +30,21 @@ public class Main {
 			e.printStackTrace();
 		}
 	}
+
+	private static String firstLinePattern(String frase) {
+		String toReturn = " /\\/\\";
+		for(int i = 0; i < (frase.length()/4 - 1); i++) {
+			toReturn += "/\\/\\";
+		}
+		toReturn += "/\\/\\" + "\n";
+		toReturn += "< " + frase + " >" + "\n";
+		toReturn += " \\/\\/";
+		for(int i = 0; i < (frase.length()/4 - 1); i++) {
+			toReturn += "\\/\\/";
+		}
+		toReturn += "\\/\\/";
+		
+		return toReturn;
+	} 
 
 }
