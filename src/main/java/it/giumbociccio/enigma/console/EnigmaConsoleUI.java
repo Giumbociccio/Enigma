@@ -142,12 +142,12 @@ public class EnigmaConsoleUI {
 		String rotoriDisponibili = "12345";
 		
 		for(String rotor : rotors) {
-			if(!rotoriDisponibili.contains(rotor)) {
+			if(rotoriDisponibili.contains(rotor)) {
+				rotoriDisponibili.replace(rotor, "");
+			} else {
 				System.err.println("ERRORE! Rotore '" + rotor + "' non trovato o già inserito\n"); //non disponibile
 				toReturn = false;
-				continue;
 			}
-			rotoriDisponibili.replace(rotor, "");
 		}
 
 		if (rotors.length != 3) {
