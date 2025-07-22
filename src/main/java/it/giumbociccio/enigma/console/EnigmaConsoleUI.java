@@ -117,14 +117,15 @@ public class EnigmaConsoleUI {
 		System.out.println("Rotori disponibili: 1, 2, 3, 4, 5");
 		System.out.println("Scegli 3 rotori da destra a sinistra (1° = rotore veloce): es. '3, 5, 2'");
 		String risposta = s.nextLine();
+
+		String[] rotors = risposta.trim().split(",\\s*");
 		
-		if (!validateRotors(risposta)) {
+		if (!validateRotors(rotors)) {
 			return rotorsSettings(); // richiama solo se qualcosa è andato storto
 		}
 
 		// Se tutto è valido
-		String[] rotors = risposta.trim().split(",\\s*");
-		
+	
 		
 		String toReturn = "";
 		return toReturn;
@@ -135,9 +136,26 @@ public class EnigmaConsoleUI {
 		return null;
 	}
 	
-		private boolean validateRotors(String risposta) {
-		String[] rotors = risposta.trim().split(",\\s*");
-		return false;
+		private boolean validateRotors(String[] rotors) {
+		boolean toReturn = true;
+
+		String rotoriDisponibili = "12345";
+		
+		for(String rotor : rotors) {
+			if(!rotoriDisponibili.contains(rotor)) {
+				System.err.println("ERRORE! Rotore '" + rotor + "' non trovato o già inserito\n"); //non disponibile
+				toReturn = false;
+				continue;
+			}
+			rotoriDisponibili.replace(rotor, "");
+		}
+
+		if (rotors.length != 3) {
+			System.err.println("ERRORE! Trovati " + rotors.length + " rotori su 3\nInserire 3 rotori\n");
+			toReturn = false;
+		}
+
+		return toReturn;
 	}
 
 	boolean validateConnections(String risposta) {
@@ -153,7 +171,7 @@ public class EnigmaConsoleUI {
 
 		String connections = "";
 		if (pairs.length > 10) {
-			System.err.println("ERRORE! Massimo 10 connessioni. Connessioni attuali: " + pairs.length + "\n");
+			System.err.println("ERRORE! Trovate " + pairs.length + " connessioni su un massimo di 10\n");
 			toReturn = false;
 		}
 
