@@ -114,35 +114,55 @@ public class EnigmaConsoleUI {
 	}
 	
 	private String rotorsSettings() {
-		System.out.println("Rotori disponibili: 1, 2, 3, 4, 5");
+		System.out.println("Rotori disponibi 1, 2, 3, 4, 5");
 		System.out.println("Scegli 3 rotori da destra a sinistra (1° = rotore veloce): es. '3, 5, 2'");
-		String risposta = s.nextLine();
+		String rotors = s.nextLine().trim();
 
-		String[] rotors = risposta.trim().split(",\\s*");
+		String[] rotorsArray = rotors.split(",\\s*");
 		
-		if (!validateRotors(rotors)) {
+		if (!validateRotors(rotorsArray)) {
 			return rotorsSettings(); // richiama solo se qualcosa è andato storto
 		}
 
 		// Se tutto è valido
-	
-		
-		String toReturn = "";
-		return toReturn;
+	 return rotors;
 	}
 	
 	private String reflectorSettings() {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("Scegli un reflector");
+		System.out.println("Reflectors disponibili: A, B, C");
+		String reflector = s.nextLine().toUpperCase();
+		
+		if (!validateReflector(reflector)) {
+			return reflectorSettings(); // richiama solsolo se qualcosa è andato storto
+		}
+
+		// Se tutto è valido
+		return reflector;
 	}
-	
+
+	private boolean validateReflector(String reflector) {lean toReturn = true;
+  String reflectorsDisponibili = "ABC";
+		if (rotors.length != 1) {
+			System.err.println("ERRORE! Inserire 1 reflector\n");
+			toReturn = false;
+		}
+
+		if(!reflectorsDisponibili.contains(reflector)) {
+			System.err.println("ERRORE! Reflector '" + rotor + "' non trovato\n");
+			toReturn = false;
+		}
+
+		return toReturn;
+	}
+
 		private boolean validateRotors(String[] rotors) {
 		boolean toReturn = true;
 
 		String rotoriDisponibili = "12345";
 		
 		for(String rotor : rotors) {
-			if(rotoriDisponibili.contains(rotor)) {
+			if(rotoriDisponibili.contains(rotor) && rotor.length() == 1) {
 				rotoriDisponibili.replace(rotor, "");
 			} else {
 				System.err.println("ERRORE! Rotore '" + rotor + "' non trovato o già inserito\n"); //non disponibile
