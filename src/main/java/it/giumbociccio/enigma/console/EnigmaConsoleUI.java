@@ -4,6 +4,7 @@ import java.util.*;
 
 import it.giumbociccio.enigma.Main;
 import it.giumbociccio.enigma.logic.EnigmaMachine;
+import it.giumbociccio.enigma.model.EnigmaSettings;
 import it.giumbociccio.enigma.utils.Utility;
 
 public class EnigmaConsoleUI {
@@ -88,6 +89,10 @@ public class EnigmaConsoleUI {
 		// Reflector
 		System.out.println("Seleziona il riflettore");
 		String reflector = reflectorSettings();
+
+  // Modifica le impostazioni
+  EnigmaSettings settings = new EnigmaSettings(plugboard, rotors, reflector);
+  this.enigma.setSettings(settings);
 	}
 
 	private String plugboardSettings() {
