@@ -3,30 +3,36 @@ package it.giumbociccio.enigma.model;
 import java.util.*;
 import com.google.gson.annotations.Expose;
 import it.giumbociccio.enigma.logic.Rotors;
+import it.giumbociccio.enigma.utils.Utility;
 
 public class EnigmaSettings {
 
 	// vengono riempiti tramite gson
 	@Expose
-	private List<String> rotorsOrder;
-	@Expose
 	private String plugboard;
 	@Expose
-	private String reflectorType;
+	private List<String> rotorsOrder;
+	@Expose
+	private String initialPositions;
 	@Expose
 	private String ringSettings;
 	@Expose
-	private String initialPositions;
+	private String reflectorType;
 
 	// vengono riempiti manualmente da SettingsManager
 	private Rotors rotors;
 
-	public EnigmaSettings() {
-
+	public EnigmaSettings(String plugboard, List<String> rotorsOrder, String initialPositions, String ringSettings,
+			String reflector) {
+		this.setPlugboard(plugboard);
+		this.setRotorsOrder(rotorsOrder);
+		this.setInitialPositions(initialPositions);
+		this.setRingSettings(ringSettings);
+		this.setReflectorType(reflector);
 	}
 
 	public List<String> getRotorsOrder() {
-		return rotorsOrder;
+		return this.rotorsOrder;
 	}
 
 	public void setRotorsOrder(List<String> rotorsOrder) {
@@ -34,7 +40,26 @@ public class EnigmaSettings {
 	}
 
 	public String getPlugboard() {
-		return plugboard;
+		return this.plugboard;
+	}
+	
+	//TODO: capire bene la struttura di questa funzione
+	public String getPlugboardConnections() {
+		String TODO = "capire bene la struttura di questa funzione";
+		
+		Set<String> pairs = new LinkedHashSet<>();
+
+	    for (int i = 0; i < 26; i++) {
+	        char original = Utility.alfabeto[i];
+	        char mapped = this.plugboard.charAt(i);
+
+	        if (original != mapped) {
+	            String pair = original < mapped ? "" + original + mapped : "" + mapped + original;
+	            pairs.add(pair);
+	        }
+	    }
+
+	    return pairs.isEmpty() ? "Plugboard vuoto" : String.join(", ", pairs);
 	}
 
 	public void setPlugboard(String plugboard) {
@@ -42,7 +67,7 @@ public class EnigmaSettings {
 	}
 
 	public String getReflectorType() {
-		return reflectorType;
+		return this.reflectorType;
 	}
 
 	public void setReflectorType(String reflectorType) {
@@ -50,7 +75,7 @@ public class EnigmaSettings {
 	}
 
 	public String getRingSettings() {
-		return ringSettings;
+		return this.ringSettings;
 	}
 
 	public void setRingSettings(String ringSettings) {

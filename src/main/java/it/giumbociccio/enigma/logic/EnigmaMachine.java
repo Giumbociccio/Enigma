@@ -13,6 +13,10 @@ public class EnigmaMachine {
 	public EnigmaSettings getCurrentSettings() {
 		return this.settings;
 	}
+	
+	public void setSettings(EnigmaSettings settings) {
+		this.settings = settings;
+	}
 
 //----------------------------------------------------------- change letter
 	public char changeLetter(char letter) {

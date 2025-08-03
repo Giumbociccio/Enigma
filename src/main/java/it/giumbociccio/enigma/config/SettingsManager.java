@@ -32,7 +32,7 @@ public class SettingsManager {
 			// convert the JSON data to a Java object 'EnigmaSettings'
 			EnigmaSettings settings = gson.fromJson(jsonSettings, EnigmaSettings.class);
 
-			// QUI CONVERTI LE STRINGHE IN HASHMAP, METTI BENE I ROTORI (connections) ETC.
+			// QUI CONVERTI LE STRINGHE IN MAP, METTI BENE I ROTORI (connections) ETC.
 
 			//rotori
 			List<String> rotorsOrder = settings.getRotorsOrder();
@@ -69,9 +69,10 @@ public class SettingsManager {
 			// Convert the Java object `currentSettings` into a JSON data and write to a
 			// file
 			gson.toJson(currentSettings, writer);
-
+			System.out.println("Impostazioni salvate con successo");
+			
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			System.err.println("Errore nel salvataggio: " + e.getMessage());
 		}
 
 	}
