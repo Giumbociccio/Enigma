@@ -1,7 +1,6 @@
-Todo:
-- migliorare (finire) il cambio di impostazioni da consoleUI:
-  - bisogna creare i rotors (solitamente fatto da settingsManager)
-  - aggiungere initialPositions e ringSettings (e relativi validatori)
-- quando si settano le nuove impostazioni, stampare (attuali --> .....) chiamando this.enigma.getCurrentSettings():
-  - imposta la plugboard (connessioni attuali: AX, GT, LP)
-  - imposta i rotori (attuali: '4, 2, 3' - initialPositions 'EHR' - ringSettings 'BAA')
+STORIA:
+La macchina "Enigma" fu un dispositivo elettromeccanico usato dalle forze armate tedesco durante la Seconda Guerra Mondiale per cifrare e decifrare messaggi che venivano successivamente trasmessi in chiaro (in onde radio facilmente intercettabili).
+La potenza di questa macchina, infatti, era tale da impedire a chiunque non conoscesse la configurazione delle impostazioni di comprendere i messaggi. Le impostazioni della macchina venivano cambiate giorno per giorno, e la scaletta veniva comunicata di persona agli ufficiali settimanalmente.
+
+DESCRIZIONE:
+Il dispositivo consisteva in una tastiera (simil macchina da scrivere), una "lampboard" (l'output della cifratura).
