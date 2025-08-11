@@ -91,5 +91,5 @@ Distribuito sotto licenza MIT. Vedi il file [LICENSE](LICENSE) per i dettagli.
 
 ## Contatti
 
-Realizzato da [Giumbociccio] – [giumbociccio.co@gmail.com]
+Realizzato da [Giumbociccio](mailto:giumbociccio.co@gmail.com)
 
