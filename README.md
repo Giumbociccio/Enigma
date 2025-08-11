@@ -78,6 +78,7 @@ java -jar junit-platform-console-standalone-1.9.0.jar --class-path . --scan-clas
 Per la storia della macchina Enigma, il funzionamento tecnico dell’emulatore e guide dettagliate all’utilizzo:
 
 👉 Consulta la Wiki del progetto
+
 ---
 
 ## Contribuire
