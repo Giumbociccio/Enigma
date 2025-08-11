@@ -71,11 +71,19 @@ Per eseguire i test:
 javac -cp .:junit-platform-console-standalone-1.9.0.jar *.java
 java -jar junit-platform-console-standalone-1.9.0.jar --class-path . --scan-classpath
 ```
+
+---
+
+## Documentazione
+Per la storia della macchina Enigma, il funzionamento tecnico dell’emulatore e guide dettagliate all’utilizzo:
+
+👉 Consulta la Wiki del progetto
 ---
 
 ## Contribuire
 
-Le pull request sono benvenute! Apri un'issue prima per proporre modifiche.
+Le pull request sono benvenute! Apri un'issue prima per proporre modifiche. <br />
+Se vuoi contribuire, consulta la guida per i collaboratori.
 
 ## Licenza
 
@@ -85,13 +93,3 @@ Distribuito sotto licenza MIT. Vedi il file [LICENSE](LICENSE) per i dettagli.
 
 Realizzato da [Giumbociccio] – [giumbociccio.co@gmail.com]
 
----
-
-📚 Documentazione
-Per la storia della macchina Enigma, il funzionamento tecnico dell’emulatore e guide dettagliate all’utilizzo:
-
-👉 Consulta la Wiki del progetto
-
-🤝 Contribuire
-Pull request e suggerimenti sono benvenuti!
-Se vuoi contribuire, consulta la guida per i collaboratori.
