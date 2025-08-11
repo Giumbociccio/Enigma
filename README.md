@@ -51,10 +51,11 @@ Output:
 
 ## Architettura
 
-- `EnigmaMachine.java`: classe principale che combina i componenti
-- `Rotor.java`: implementa il comportamento dei rotori
-- `Reflector.java`: gestisce il riflettore
-- `Plugboard.java`: mappa gli scambi di lettere
+- `logic/`: gestisce la cifratura
+- `logic/EnigmaMachine.java`: classe principale che combina i componenti
+- `logic/Rotor.java` e `logic/Rotors.java`: implementano il comportamento dei rotori
+- `config/SettingsManager.java`: gestisce la configurazione dell'emulatore, funge da ponte tra il file database `settings.json` e la classe `model/EnigmaSettings.java` che rappresenta le impostazioni all'interno del codice. 
+- `console/EnigmaConsoleUI.java`: gestisce l'interfaccia con l'utente
 
 ## Tecnologie
 
