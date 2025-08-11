@@ -24,7 +24,7 @@ Ideale per scopi didattici, storici o semplicemente per curiosi della crittograf
 Clona il repository:
    ```bash
    git clone https://github.com/Giumbociccio/Enigma.git
-   cd enigma-java
+   cd Enigma
 ```
 Compila:
 ```bash
