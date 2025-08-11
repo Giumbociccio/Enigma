@@ -1,9 +1,8 @@
 # Emulatore Enigma in Java
 
 Un emulatore funzionante della celebre macchina cifrante tedesca _Enigma_, scritto in Java. <br />
+Ideale per scopi didattici, storici o semplicemente per curiosi della crittografia classica. <br />
 Il progetto riproduce fedelmente il comportamento meccanico ed elettrico dei rotori, del riflettore e del plugboard.
-<br />
-Ideale per scopi didattici, storici o semplicemente per curiosi della crittografia classica.
 
 
 ![Macchina Enigma](immagini/enigma.jpg)
