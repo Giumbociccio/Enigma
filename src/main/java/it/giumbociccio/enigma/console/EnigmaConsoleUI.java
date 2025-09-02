@@ -2,6 +2,7 @@ package it.giumbociccio.enigma.console;
 
 import java.util.*;
 
+import it.giumbociccio.enigma.config.SettingsManager;
 import it.giumbociccio.enigma.logic.EnigmaMachine;
 import it.giumbociccio.enigma.model.EnigmaSettings;
 import it.giumbociccio.enigma.utils.Utility;
@@ -116,7 +117,8 @@ public class EnigmaConsoleUI {
 
 		// Modifica le impostazioni
 		EnigmaSettings settings = new EnigmaSettings(plugboard, rotorsOrder, initialPositions, ringSettings, reflector);
-		this.enigma.setSettings(settings);
+		SettingsManager.saveSettings(settings);
+		SettingsManager.loadSettings();
 	}
 
 	private String configurePlugboard(String currentPlugboard) {
@@ -143,7 +145,7 @@ public class EnigmaConsoleUI {
 			plugboard[Utility.letterToInt(secondLetter)] = firstLetter;
 		}
 
-		System.out.println(new String(plugboard));
+//		System.out.println(new String(plugboard));
 		return new String(plugboard);
 	}
 

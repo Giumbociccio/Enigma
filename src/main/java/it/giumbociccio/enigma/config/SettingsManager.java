@@ -13,20 +13,16 @@ import it.giumbociccio.enigma.logic.Rotors;
 import it.giumbociccio.enigma.model.EnigmaSettings;
 
 public class SettingsManager {
-	private String settingsPath = "settings/settings.json";
+	private static String settingsPath = "settings/settings.json";
 	public static Gson gson = new GsonBuilder()
 		    .excludeFieldsWithoutExposeAnnotation()
 		    .create();
 
-	public SettingsManager(String settingsPath) {
-		this.settingsPath = settingsPath;
-	}
-
 	public SettingsManager() {
 	}
 
-	public EnigmaSettings loadSettings() {
-		try (Reader jsonSettings = new FileReader(this.settingsPath);
+	public static EnigmaSettings loadSettings() {
+		try (Reader jsonSettings = new FileReader(settingsPath);
 				Reader jsonOriginalSettings = new FileReader("settings/originalSettings.json")) {
 
 			// convert the JSON data to a Java object 'EnigmaSettings'
@@ -53,6 +49,7 @@ public class SettingsManager {
 			String reflector = (String) reflectors.get(settings.getReflectorType());
 			
 			//Rotors
+			
 			Rotors rotors = new Rotors(rotori, reflector);
 			settings.setRotors(rotors);
 
@@ -63,8 +60,8 @@ public class SettingsManager {
 		}
 	}
 
-	public void saveSettings(EnigmaSettings currentSettings) {
-		try (Writer writer = new FileWriter(this.settingsPath)) {
+	public static void saveSettings(EnigmaSettings currentSettings) {
+		try (Writer writer = new FileWriter(settingsPath)) {
 
 			// Convert the Java object `currentSettings` into a JSON data and write to a
 			// file
@@ -78,7 +75,7 @@ public class SettingsManager {
 	}
 
 	@SuppressWarnings("unchecked")
-	private List<Rotor> getRotorsSettings(Map<String, Object> originalSettings,
+	private static List<Rotor> getRotorsSettings(Map<String, Object> originalSettings,
             List<String> rotorsOrder,
             String initialPositions,
             String ringSettings){
