@@ -41,6 +41,12 @@ Desktop.ini
 *~
 
 # =====================================
+# Script personali
+# =====================================
+clean_git_repo.bat
+
+
+# =====================================
 # Compiled class files (in case not using Maven)
 # =====================================
 *.class
