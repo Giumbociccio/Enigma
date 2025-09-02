@@ -6,8 +6,10 @@ Il progetto riproduce fedelmente il comportamento meccanico ed elettrico dei rot
 
 
 ![Macchina Enigma](immagini/enigma.jpg)
+La macchina Enigma ↑
 
 ![Console](immagini/console.jpg)
+Interfaccia della console ↑
 
 ## Funzionalità
 - Configurazione dei rotori e del riflettore
