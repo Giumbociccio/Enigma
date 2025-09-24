@@ -5,9 +5,9 @@ Ideale per scopi didattici, storici o semplicemente per curiosi della crittograf
 Il progetto riproduce fedelmente il comportamento meccanico ed elettrico dei rotori, del riflettore e del plugboard.
 
 
-| <img src="immagini/enigma.jpg" width="400"/> | <img src="immagini/console.jpg" width="400"/> |
+| **La macchina Enigma** | **Interfaccia della console** |
 |:------------------------------:|:--------------------------------:|
-| _Figura 1: La macchina Enigma_ | _Figura 2: Interfaccia della console_ |
+| <img src="immagini/enigma.jpg" width="400"/> | <img src="immagini/console.jpg" width="400"/> |
 
 
 
